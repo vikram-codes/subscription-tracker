@@ -3,18 +3,27 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { serve } = require("@upstash/workflow/express");
 import Subscription from "../models/subscription.model.js";
+import { sendReminderEmail } from "../utils/send-email.js";
 
-const REMINDERS = [7, 5, 2, 1];
+const REMINDERS = [0];
 
 export const sendReminders = serve(async (context) => {
+  console.log("🔥 Reminder endpoint hit!", context.requestPayload);
+
   const { subscriptionId } = context.requestPayload;
   const subscription = await fetchSubscription(context, subscriptionId);
+  console.log("🧠 Subscription fetched:", subscription);
+  console.log("👤 Populated user:", subscription.user);
 
   if (!subscription || subscription.status !== "active") return;
 
   const renewalDate = dayjs(subscription.renewalDate);
 
-  if (renewalDate.isBefore(dayjs())) {
+  console.log("🕓 Current day:", dayjs().format("YYYY-MM-DD"));
+  console.log("📅 Renewal date:", renewalDate.format("YYYY-MM-DD"));
+  console.log("🧪 isBefore:", renewalDate.isBefore(dayjs(), "day"));
+
+  if (renewalDate.isBefore(dayjs(), "day")) {
     console.log(
       `Renewal date has passed for subscription ${subscriptionId}. Stopping workflow.`
     );
@@ -32,7 +41,7 @@ export const sendReminders = serve(async (context) => {
       );
     }
 
-    if (dayjs().isSame(reminderDate, "day")) {
+    if (dayjs().format("YYYY-MM-DD") === reminderDate.format("YYYY-MM-DD")) {
       await triggerReminder(
         context,
         `${daysBefore} days before reminder`,
@@ -53,8 +62,13 @@ const sleepUntilReminder = async (context, label, date) => {
   await context.sleepUntil(label, date.toDate());
 };
 
-const triggerReminder = async (context, label) => {
-  return await context.run(label, async () => {
-    console.log(`Triggering ${label} reminder`);
+const triggerReminder = async (context, label, subscription) => {
+  console.log(`📬 Email will be sent to: ${subscription.user.email}`);
+  console.log(`🧠 Reminder label: ${label}`);
+
+  await sendReminderEmail({
+    to: subscription.user.email,
+    type: label,
+    subscription,
   });
 };
