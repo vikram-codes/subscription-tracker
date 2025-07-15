@@ -5,7 +5,7 @@ const { serve } = require("@upstash/workflow/express");
 import Subscription from "../models/subscription.model.js";
 import { sendReminderEmail } from "../utils/send-email.js";
 
-const REMINDERS = [7, 5, 2, 1]; // Days before renewal date to send reminders
+const REMINDERS = [7, 5, 2, 1, 0]; // Days before renewal date to send reminders
 
 export const sendReminders = serve(async (context) => {
   console.log("🔥 Reminder endpoint hit!", context.requestPayload);
