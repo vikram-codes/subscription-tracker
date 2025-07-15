@@ -49,7 +49,7 @@ Built with Node.js, Express, and MongoDB, SubDub is a RESTful API that helps use
 
 ### 🧑‍💻 Local Setup
 
-```bash
+````bash
 # Clone the repo
 git clone https://github.com/vikram-codes/subscription-tracker.git
 cd subscription-tracker
@@ -63,34 +63,35 @@ npm run dev
 Create a .env.development.local file in the root directory with the following variables.
 Replace the placeholders with your actual credentials.
 
-<details> <summary>Click to expand environment variables example</summary>
-env
-Copy
-Edit
-# PORT
-PORT=5500
-SERVER_URL="http://localhost:5500"
+<details>
+  <summary>Click to expand environment variables example</summary>
 
-# ENVIRONMENT
-NODE_ENV="development"
+  ```env
+  # PORT
+  PORT=5500
+  SERVER_URL="http://localhost:5500"
 
-# DATABASE
-DB_URI="mongodb+srv://vikram:VikramMongoDB69@cluster0.shevzb5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+  # ENVIRONMENT
+  NODE_ENV="development"
 
-# JWT AUTH
-JWT_SECRET="secret"
-JWT_EXPIRES_IN="1d"
+  # DATABASE
+  DB_URI="mongodb+srv://<username>:<password>@cluster0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
-# ARCJET
-ARCJET_KEY="ajkey_01k03wy38hff2v0en7sredmr7a"
-ARCJET_ENV="development"
+  # JWT AUTH
+  JWT_SECRET="<your_jwt_secret>"
+  JWT_EXPIRES_IN="1d"
 
-# QSTASH (Upstash Local Dev)
-QSTASH_URL=http://127.0.0.1:8080
-QSTASH_TOKEN="eyJVc2VySUQiOiJkZWZhdWx0VXNlciIsIlBhc3N3b3JkIjoiZGVmYXVsdFBhc3N3b3JkIn0="
+  # ARCJET
+  ARCJET_KEY="<your_arcjet_key>"
+  ARCJET_ENV="development"
 
-# NODEMAILER (Gmail App Password)
-EMAIL_PASSWORD="icmzdqkpjcthyvnp"
+  # QSTASH (Upstash Local Dev)
+  QSTASH_URL=http://127.0.0.1:8080
+  QSTASH_TOKEN="<your_qstash_token>"
+
+  # NODEMAILER (Gmail App Password)
+  EMAIL_PASSWORD="<your_gmail_app_password>"
+
 </details>
 📬 Reminder Email Testing (Local)
 You can manually test email reminders by making a POST request:
@@ -134,10 +135,4 @@ Reminder emails are scheduled using Upstash QStash.
 This is a backend-only API, no frontend UI provided.
 
 For instant reminder testing, set REMINDERS = [0] in workflow.controller.js and trigger manually.
-
-📚 License
-This project is open source under the MIT License.
-
-🔗 Project Link
-View on GitHub
-```
+````
