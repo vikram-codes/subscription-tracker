@@ -7,6 +7,8 @@
 Manage recurring subscriptions with ease.  
 Built with Node.js, Express, and MongoDB, SubDub is a RESTful API that helps users track renewals, receive email reminders, and stay on top of payments.
 
+> **Note:** This is a learning project focused on backend development - no frontend included!
+
 ---
 
 ## 🔧 Tech Stack
@@ -39,100 +41,163 @@ Built with Node.js, Express, and MongoDB, SubDub is a RESTful API that helps use
 
 ### 🛠️ Prerequisites
 
-- Node.js v18+ installed
-- MongoDB Atlas cluster & URI
-- Gmail App Password (for Nodemailer)
-- Upstash account for QStash
-- Arcjet account (optional but recommended)
+- **Node.js** + **Express.js** – Core backend framework
+- **MongoDB** + **Mongoose** – Database and ODM
+- **JWT** – Authentication tokens
+- **bcryptjs** – Password hashing
+- **Nodemailer** – Email functionality
+- **Upstash QStash** – Background job scheduling
+- **Arcjet** – Rate limiting and bot protection
+- **Day.js** – Date manipulation
 
 ---
 
-### 🧑‍💻 Local Setup
+## 🚀 Quick Start
 
-````bash
-# Clone the repo
+```bash
+# Clone and setup
 git clone https://github.com/vikram-codes/subscription-tracker.git
 cd subscription-tracker
-
-# Install dependencies
 npm install
 
-# Run the dev server
+# Start development server
 npm run dev
-🛠️ Environment Variables
-Create a .env.development.local file in the root directory with the following variables.
-Replace the placeholders with your actual credentials.
+```
 
-<details>
-  <summary>Click to expand environment variables example</summary>
+**Prerequisites for local testing:**
 
-  ```env
-  # PORT
-  PORT=5500
-  SERVER_URL="http://localhost:5500"
+- Node.js v18+
+- MongoDB Atlas account
+- Gmail app password (for email features)
+- Upstash account (for background jobs)
 
-  # ENVIRONMENT
-  NODE_ENV="development"
+---
 
-  # DATABASE
-  DB_URI="mongodb+srv://<username>:<password>@cluster0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+## � Project Structure
 
-  # JWT AUTH
-  JWT_SECRET="<your_jwt_secret>"
-  JWT_EXPIRES_IN="1d"
-
-  # ARCJET
-  ARCJET_KEY="<your_arcjet_key>"
-  ARCJET_ENV="development"
-
-  # QSTASH (Upstash Local Dev)
-  QSTASH_URL=http://127.0.0.1:8080
-  QSTASH_TOKEN="<your_qstash_token>"
-
-  # NODEMAILER (Gmail App Password)
-  EMAIL_PASSWORD="<your_gmail_app_password>"
-
-</details>
-📬 Reminder Email Testing (Local)
-You can manually test email reminders by making a POST request:
-
-POST /api/v1/workflows/subscription/reminder
-
-JSON Body:
-
-json
-Copy
-Edit
-{
-  "subscriptionId": "your_subscription_id_here"
-}
-Make sure the subscription:
-
-Is active
-
-Has a valid renewal date
-
-Belongs to a user with a valid email
-
-🧪 Folder Structure
-pgsql
-Copy
-Edit
+```
 subscription-tracker/
-│
-├── config/              # Env vars, nodemailer, upstash
-├── controllers/         # Logic for auth, users, subscriptions, workflows
-├── database/            # MongoDB connection
-├── middlewares/         # Error handler, Arcjet, auth check
-├── models/              # User and Subscription schemas
-├── routes/              # All API routes
-├── utils/               # send-email helper
-├── app.js               # Main entry point
-└── .env.development.local (excluded from Git)
-📎 Notes
-Reminder emails are scheduled using Upstash QStash.
+├── config/              # Environment & service configurations
+├── controllers/         # Business logic (auth, subscriptions, workflows)
+├── database/            # MongoDB connection setup
+├── middlewares/         # Custom middleware (auth, errors, security)
+├── models/              # Mongoose schemas
+├── routes/              # API route definitions
+├── utils/               # Helper functions (email templates, etc.)
+└── app.js               # Application entry point
+```
 
-This is a backend-only API, no frontend UI provided.
+---
 
-For instant reminder testing, set REMINDERS = [0] in workflow.controller.js and trigger manually.
-````
+## � What I Built
+
+### Core Features
+
+- **User Management** – Registration, login, profile updates
+- **Subscription Tracking** – CRUD operations for subscription data
+- **Email Reminders** – Automated notifications before renewal dates
+- **JWT Authentication** – Secure, stateless user sessions
+- **Input Validation** – Mongoose schemas with proper validation
+- **Error Handling** – Centralized error middleware
+
+### API Endpoints
+
+- `POST /api/v1/auth/register` – User registration
+- `POST /api/v1/auth/login` – User authentication
+- `GET /api/v1/subscriptions` – Get user subscriptions
+- `POST /api/v1/subscriptions` – Create new subscription
+- `PUT /api/v1/subscriptions/:id` – Update subscription
+- `DELETE /api/v1/subscriptions/:id` – Delete subscription
+- `POST /api/v1/workflows/subscription/reminder` – Manual reminder trigger
+
+---
+
+## 🔧 Environment Setup
+
+Create `.env.development.local` file:
+
+```env
+PORT=5500
+NODE_ENV=development
+DB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRES_IN=1d
+EMAIL_PASSWORD=your_gmail_app_password
+QSTASH_TOKEN=your_upstash_token
+ARCJET_KEY=your_arcjet_key
+```
+
+---
+
+## 📚 Key Learning Outcomes
+
+### Database Design
+
+- Learned to model relationships between users and subscriptions
+- Implemented proper indexing and validation rules
+- Used Mongoose middleware for data preprocessing
+
+### Security Implementation
+
+- JWT token generation and verification
+- Password hashing with bcrypt
+- Rate limiting and bot protection with Arcjet
+- Input sanitization and validation
+
+### Asynchronous Operations
+
+- Email sending with Nodemailer
+- Background job scheduling with Upstash QStash
+- Proper error handling for async operations
+
+### Code Organization
+
+- Modular architecture with separation of concerns
+- Custom middleware for reusable functionality
+- Environment-based configuration management
+
+---
+
+## 🎓 Challenges & Solutions
+
+**Challenge:** Managing subscription renewal dates and timely reminders  
+**Solution:** Integrated Upstash QStash for reliable background job scheduling
+
+**Challenge:** Securing API endpoints without sessions  
+**Solution:** Implemented JWT-based authentication with middleware protection
+
+**Challenge:** Email delivery reliability  
+**Solution:** Used Nodemailer with Gmail SMTP and proper error handling
+
+---
+
+## 🔮 Future Learning Goals
+
+- [ ] Add comprehensive unit and integration tests
+- [ ] Implement API documentation with Swagger
+- [ ] Explore containerization with Docker
+- [ ] Add logging with Winston
+- [ ] Implement database migrations
+- [ ] Add GraphQL endpoints
+- [ ] Explore microservices architecture
+
+---
+
+## 🚀 About Me
+
+I'm Vikram, passionate about backend development and always learning new technologies.
+
+**Connect with me:**
+
+- [LinkedIn](https://www.linkedin.com/in/vikramjit-saini/)
+- [GitHub](https://github.com/vikram-codes/)
+
+---
+
+## 📝 License
+
+This project is for educational purposes. Feel free to explore, learn, and adapt!
+
+---
+
+_Built with ❤️ as part of my backend development learning journey_
