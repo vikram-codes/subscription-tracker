@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./banner.png" alt="SubDub Banner" width="60%" />
+  <img src="./banner.png" alt="SubDub Banner" width="40%" />
 </p>
 
 # 📬 SubDub - My Backend Learning Journey
