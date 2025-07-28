@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="./banner.png" alt="SubDub Banner" width="100%" />
+  <img src="./banner.png" alt="SubDub Banner" width="60%" />
 </p>
 
-# 📬 SubDub - Subscription Tracker API
+# 📬 SubDub - My Backend Learning Journey
 
 Manage recurring subscriptions with ease.  
 Built with Node.js, Express, and MongoDB, SubDub is a RESTful API that helps users track renewals, receive email reminders, and stay on top of payments.
